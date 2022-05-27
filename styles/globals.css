@@ -1,0 +1,82 @@
+/* --------------------------------------------------------
+Style Sheet for drmlb.io
+
+version: 0.9
+last modified: 15.12.2021 by Christof Bauer
+author: Christof Bauer
+email: bauer.christof@gmail.com
+----------------------------------------------------------*/
+
+:root {
+  --color-brand: #a6d1c9;
+  --color-brand-dark: #282b29;
+  --color-highlight: #c9a6d1;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ==========================================================================
+	General overrides and utilities
+	========================================================================== */
+
+html, body {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  @apply bg-highlight bg-opacity-50;
+}
+
+::-moz-selection {
+  @apply bg-highlight bg-opacity-50;
+}
+
+.link {
+  @apply underline underline-offset-2 outline-none transition-all duration-300;
+}
+
+.link:hover {
+  @apply no-underline rounded transition-all duration-500 text-white px-1 bg-brand-dark dark:bg-brand; 
+}
+
+
+/* ==========================================================================
+	Navigation
+	========================================================================== */
+
+.active-nav {
+  @apply dark:bg-brand dark:text-brand-dark bg-brand-dark text-brand ;
+}
+
+
+/* ==========================================================================
+	Forms 
+	========================================================================== */
+
+.button {
+  @apply bg-brand-dark text-brand py-4 px-8 rounded shadow-lg transition-all cursor-pointer
+    hover:shadow-none hover:text-white dark:bg-brand dark:text-brand-dark
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-dark;
+}
+
+.connect-button {
+  @apply px-4 py-2 border border-brand-dark dark:border-brand dark:bg-brand dark:text-brand-dark
+  hover:bg-brand-dark hover:text-brand dark:hover:bg-brand-dark dark:hover:text-brand transition-all;
+}
+
+
+#cursor {
+	animation: blink .75s step-end infinite;
+}
+
+@keyframes blink {
+	from, to { 
+		background-color: transparent 
+	}
+	50% { 
+		background-color: var(--color-brand); 
+	}
+}
