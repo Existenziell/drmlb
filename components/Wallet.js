@@ -1,12 +1,23 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
 import { hasEthereum } from '../lib/ethereum'
 import { ConnectWallet } from './ConnectWallet'
+import { AppContext } from '../context/AppContext'
 import { chains } from '../lib/chains'
 
-const Wallet = ({ walletConnected, setWalletConnected, userAddress, setUserAddress, setProvider, setNetworkInfo, isCorrectChain, setIsCorrectChain }) => {
+const Wallet = () => {
+  const appCtx = useContext(AppContext)
+  const {
+    walletConnected, setWalletConnected,
+    walletAddress, setWalletAddress,
+    provider, setProvider,
+    isCorrectChain, setIsCorrectChain,
+    feedback, setFeedback,
+    networkInfo, setNetworkInfo
+  } = appCtx
+
   const router = useRouter()
   const chainId = 4 // (Local:1337 | Mumbai: 80001 | Rinkeby: 4)
 
@@ -21,23 +32,24 @@ const Wallet = ({ walletConnected, setWalletConnected, userAddress, setUserAddre
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const userNetwork = await provider.getNetwork()
       const signer = provider.getSigner()
-      const networkInfo = getNameFromChainId(userNetwork.chainId)
+      const networkName = getNameFromChainId(userNetwork.chainId)
 
       if (userNetwork.chainId === chainId) {
         setIsCorrectChain(true)
         setProvider(provider)
+        // set
       } else {
-        setNetworkInfo('Please change network to Rinkeby in Metamask.')
+        setNetworkInfo(`Connected to ${networkName}. Please change network to Rinkeby in Metamask.`)
         setIsCorrectChain(false)
       }
 
       try {
         const signerAddress = await signer.getAddress()
-        setUserAddress(signerAddress)
+        setWalletAddress(signerAddress)
         setWalletConnected(true)
       } catch {
         setWalletConnected(false)
-        setUserAddress('')
+        setWalletAddress('')
       }
     }
 
@@ -57,13 +69,13 @@ const Wallet = ({ walletConnected, setWalletConnected, userAddress, setUserAddre
       // console.log('Chain changed:', getNameFromChainId(parseInt(chainId, 16)))
       router.reload(window.location.pathname)
     })
-  }, [userAddress])
+  }, [walletAddress])
 
   return (
     <div className='absolute top-4 right-20 text-right'>
       {walletConnected ?
         <div className='dark:text-brand'>
-          {userAddress.substring(0, 5)}&#8230;{userAddress.slice(userAddress.length - 4)}
+          {walletAddress.substring(0, 5)}&#8230;{walletAddress.slice(walletAddress.length - 4)}
         </div>
         :
         hasEthereum() ?

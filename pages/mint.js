@@ -1,30 +1,34 @@
+import { ethers } from 'ethers'
+import { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
-import { ethers } from 'ethers'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import detectEthereumProvider from '@metamask/detect-provider'
 import getContractInfo from '../lib/getContractInfo'
 import Tron from '../artifacts/contracts/Tron.sol/Tron.json'
-import { tronAddress } from '../config'
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader'
 import Wallet from '../components/Wallet'
 import { addCustomToken } from '../lib/addCustomToken'
+import { AppContext } from '../context/AppContext'
+import { tronAddress } from '../config'
 
 const Mint = () => {
-  const [walletConnected, setWalletConnected] = useState(false)
+  const appCtx = useContext(AppContext)
+  const {
+    walletConnected, setWalletConnected,
+    walletAddress, setWalletAddress,
+    provider, setProvider,
+    isCorrectChain, setIsCorrectChain,
+    feedback, setFeedback,
+    networkInfo, setNetworkInfo
+  } = appCtx
+
   const [contractInfo, setContractInfo] = useState({})
   const [mintAmount, setMintAmount] = useState(1)
-  const [userAddress, setUserAddress] = useState('')
-  const [provider, setProvider] = useState()
-  const [isCorrectChain, setIsCorrectChain] = useState(false)
-
   const [loading, setLoading] = useState(true)
   const [minting, setMinting] = useState(false)
   const [mintingSuccess, setMintingSuccess] = useState(false)
   const [txHash, setTxHash] = useState('')
-  const [feedback, setFeedback] = useState('')
-  const [networkInfo, setNetworkInfo] = useState('')
 
   const chainId = 4 // (Local:1337 | Mumbai: 80001 | Rinkeby: 4)
   const router = useRouter()
@@ -55,6 +59,7 @@ const Mint = () => {
           setTxHash(receipt.transactionHash)
         })
     } catch (error) {
+      // Catch if user rejects transaction
       setNetworkInfo(error.message)
       setMinting(false)
     }
@@ -89,22 +94,13 @@ const Mint = () => {
           <title>Get E1 Community Token | drmlb.io</title>
         </Head>
 
-        <Wallet
-          walletConnected={walletConnected}
-          setWalletConnected={setWalletConnected}
-          userAddress={userAddress}
-          setUserAddress={setUserAddress}
-          setProvider={setProvider}
-          setNetworkInfo={setNetworkInfo}
-          isCorrectChain={isCorrectChain}
-          setIsCorrectChain={setIsCorrectChain}
-        />
+        <Wallet />
 
         <div className='flex flex-col md:flex-row justify-center w-full min-h-screen'>
 
           {(!mintingSuccess && !minting) &&
             <div>
-              <h1 className='text-4xl md:text-6xl'>Get E1 Community Token</h1>
+              <h1 className='text-4xl md:text-6xl'>E1 Community Token</h1>
 
               <p className='mt-4'>Our E1 Community Token can be found on{' '}
                 <Link href={`https://rinkeby.etherscan.io/address/${tronAddress}#code`}>
@@ -177,7 +173,6 @@ const Mint = () => {
             <div className='flex flex-col items-center justify-center mb-8 flex-grow'>
               <ClimbingBoxLoader color={'white'} loading={minting} size={40} />
               <p className='mt-20 font-mono text-center text-lg'>Minting in progress...<br />Waiting for Network confirmation.</p>
-              <p className='font-mono'>{networkInfo}</p>
             </div>
           }
 

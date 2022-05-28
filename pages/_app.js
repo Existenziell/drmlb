@@ -2,10 +2,11 @@ import 'tailwindcss/tailwind.css'
 import '../styles/globals.css'
 import Layout from '../components/_Layout'
 import Head from 'next/head'
+import { AppWrapper } from '../context/AppContext'
 
 function Engine({ Component, pageProps }) {
   return (
-    <>
+    <AppWrapper>
       <Head>
         <title>drmlb || Blockchain | DeFi | DAOs | NFTs</title>
         <meta name='description' content='drmlb || Blockchain | DeFi | DAOs | NFTs' />
@@ -25,7 +26,7 @@ function Engine({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </AppWrapper>
   )
 }
 
