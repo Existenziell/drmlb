@@ -113,7 +113,7 @@ const Mint = () => {
               </p>
               <p className='mb-12'>We currently operate on the Rinkeby testchain, get free ETH{` `}
                 <Link href='https://faucet.rinkeby.io/'>
-                  <a className='link inline' target='_blank' rel="noreferrer noopener">here</a>
+                  <a className='link inline' target='_blank' rel="noreferrer noopener">on this faucet</a>
                 </Link>.
               </p>
 
@@ -138,7 +138,15 @@ const Mint = () => {
                     <svg onClick={() => checkMintAmount(mintAmount + 1)} xmlns='http://www.w3.org/2000/svg' className='h-12 w-12 cursor-pointer text-brand-dark dark:text-brand' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                       <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 15l7-7 7 7' />
                     </svg>
-                    <input type='number' min='1' max={maxMintAmount} value={mintAmount} readOnly onChange={() => { }} className='pl-4 text-4xl text-center text-brand-dark bg-brand dark:text-brand dark:bg-brand-dark' />
+                    <label htmlFor='mintAmount'>
+                      <input type='number' name='mintAmount' id='mintAmount' readOnly
+                        min='1'
+                        max={maxMintAmount}
+                        value={mintAmount}
+                        onChange={() => { }}
+                        className='pl-4 text-4xl text-center text-brand-dark bg-brand dark:text-brand dark:bg-brand-dark'
+                      />
+                    </label>
                     <svg onClick={() => checkMintAmount(mintAmount - 1)} xmlns='http://www.w3.org/2000/svg' className='h-12 w-12 cursor-pointer text-brand-dark dark:text-brand' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                       <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
                     </svg>
