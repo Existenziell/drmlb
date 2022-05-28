@@ -38,24 +38,26 @@ const Mint = () => {
     init()
   }, [])
 
-
-
   async function mint() {
     setMinting(true)
     // Provider is read-only, get a signer for on-chain transactions
     const signer = provider.getSigner()
     // Since the third argument is signer, the contract data can be manipulated
     const contract = new ethers.Contract(tronAddress, Tron.abi, signer)
-    // const address = await signer.getAddress()
-    const transaction = await contract.mint(mintAmount)
 
-    await transaction.wait()
-      .then((receipt) => {
-        setMintingSuccess(true)
-        setMinting(false)
-        setFeedback('Congratulations, you are now the owner of your very own E1 Token!')
-        setTxHash(receipt.transactionHash)
-      })
+    try {
+      const transaction = await contract.mint(mintAmount)
+      await transaction.wait()
+        .then((receipt) => {
+          setMintingSuccess(true)
+          setMinting(false)
+          setFeedback('Congratulations, you are now the owner of your very own E1 Token(s)!')
+          setTxHash(receipt.transactionHash)
+        })
+    } catch (error) {
+      setNetworkInfo(error.message)
+      setMinting(false)
+    }
   }
 
   const checkMintAmount = (amount) => {
@@ -117,6 +119,17 @@ const Mint = () => {
 
               <video src='/tron/animation.mp4' controls={false} loop={true} autoPlay={true} muted className='max-w-xs mx-auto mb-8 rounded shadow' />
 
+              {networkInfo &&
+                <div className='flex flex-col'>
+                  <div className='flex items-center justify-center mb-4 gap-4'>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z' />
+                    </svg>
+                    <p className='font-mono text-center'>{networkInfo}</p>
+                  </div>
+                </div>
+              }
+
               {walletConnected && isCorrectChain &&
                 <section className='flex flex-col md:flex-row items-center justify-center text-xl p-8'>
 
@@ -145,17 +158,6 @@ const Mint = () => {
                 </section>
               }
 
-              {networkInfo &&
-                <div className='flex flex-col'>
-                  <div className='flex items-center justify-center mb-4 gap-4'>
-                    <svg xmlns='http://www.w3.org/2000/svg' className='h-12 w-12' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z' />
-                    </svg>
-                    <p className='font-mono text-center'>{networkInfo}</p>
-                  </div>
-                </div>
-              }
-
               <div>
                 <h2>Tokens minted: </h2>
                 <p>{contractInfo.totalSupply.toNumber()}</p>
@@ -172,8 +174,11 @@ const Mint = () => {
           }
 
           {mintingSuccess &&
-            <div className='text-center font-mono text-sm mt-16'>
-              <p className='text-brand-dark dark:text-brand text-2xl max-w-lg mx-auto'>{feedback}</p>
+            <div className='text-center font-mono flex flex-col items-center text-sm mt-4'>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 mb-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <p className='text-brand-dark dark:text-brand text-2xl max-w-lg'>{feedback}</p>
               <p className='my-8'>Transaction hash: (click to verify)<br /><a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target='_blank' rel='noopener noreferrer' className='link'>{txHash}</a></p>
               <div className='flex flex-col items-center justify-center gap-2 mt-4' >
                 <button className='button' onClick={addCustomToken}>Add to MetaMask</button>
