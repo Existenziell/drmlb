@@ -201,10 +201,9 @@ const Mint = () => {
             <div className='text-center font-mono text-sm mt-16'>
               <p className='text-brand-dark dark:text-brand text-2xl max-w-lg mx-auto'>{feedback}</p>
               <p className='my-8'>Transaction hash: (click to verify)<br /><a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target='_blank' rel='noopener noreferrer' className='link'>{txHash}</a></p>
-              <button className='button' onClick={addCustomTokens}>Add AMP to MetaMask</button>
-              <div className='flex justify-center gap-2 mt-4' >
+              <div className='flex flex-col items-center justify-center gap-2 mt-4' >
+                <button className='button' onClick={addCustomTokens}>Add to MetaMask</button>
                 <button onClick={() => setMintingSuccess(false)} className='button block'>Mint More</button>
-                <Link href='/'><a className='button block'>Back Home</a></Link>
               </div>
             </div>
           }
