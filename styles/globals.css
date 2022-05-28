@@ -63,8 +63,8 @@ html, body {
 }
 
 .connect-button {
-  @apply px-4 py-2 border border-brand-dark dark:border-brand dark:bg-brand dark:text-brand-dark
-  hover:bg-brand-dark hover:text-brand dark:hover:bg-brand-dark dark:hover:text-brand transition-all;
+  @apply px-4 py-2 border border-brand-dark dark:border-brand dark:bg-brand-dark dark:text-brand
+  hover:bg-brand-dark hover:text-brand dark:hover:bg-brand dark:hover:text-brand-dark transition-all;
 }
 
 

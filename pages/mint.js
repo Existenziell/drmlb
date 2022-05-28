@@ -91,6 +91,7 @@ const Mint = () => {
         <Wallet
           walletConnected={walletConnected}
           setWalletConnected={setWalletConnected}
+          userAddress={userAddress}
           setUserAddress={setUserAddress}
           setProvider={setProvider}
           setNetworkInfo={setNetworkInfo}

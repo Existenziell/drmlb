@@ -6,11 +6,7 @@ import { hasEthereum } from '../lib/ethereum'
 import { ConnectWallet } from './ConnectWallet'
 import { chains } from '../lib/chains'
 
-const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvider, setNetworkInfo, isCorrectChain, setIsCorrectChain }) => {
-  // const [walletConnected, setWalletConnected] = useState(false)
-  // const [isCorrectChain, setIsCorrectChain] = useState(false)
-  const [connectedWalletAddress, setConnectedWalletAddress] = useState('')
-  // const [networkInfo, setNetworkInfo] = useState('')
+const Wallet = ({ walletConnected, setWalletConnected, userAddress, setUserAddress, setProvider, setNetworkInfo, isCorrectChain, setIsCorrectChain }) => {
   const router = useRouter()
   const chainId = 4 // (Local:1337 | Mumbai: 80001 | Rinkeby: 4)
 
@@ -37,12 +33,11 @@ const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvid
 
       try {
         const signerAddress = await signer.getAddress()
-        setConnectedWalletAddress(signerAddress)
         setUserAddress(signerAddress)
         setWalletConnected(true)
       } catch {
         setWalletConnected(false)
-        setConnectedWalletAddress('')
+        setUserAddress('')
       }
     }
 
@@ -62,13 +57,13 @@ const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvid
       // console.log('Chain changed:', getNameFromChainId(parseInt(chainId, 16)))
       router.reload(window.location.pathname)
     })
-  })
+  }, [userAddress])
 
   return (
     <div className='absolute top-4 right-20 text-right'>
       {walletConnected ?
         <div className='dark:text-brand'>
-          {connectedWalletAddress.substring(0, 5)}&#8230;{connectedWalletAddress.slice(connectedWalletAddress.length - 4)}
+          {userAddress.substring(0, 5)}&#8230;{userAddress.slice(userAddress.length - 4)}
         </div>
         :
         hasEthereum() ?
@@ -76,7 +71,6 @@ const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvid
           :
           <a href='https://metamask.io/download/' target='_blank' rel="noreferrer noopener">Install MetaMask</a>
       }
-      {/* {networkInfo && <p className='text-md text-xs mt-1 dark:text-brand'>{networkInfo}</p>} */}
     </div>
   )
 }
