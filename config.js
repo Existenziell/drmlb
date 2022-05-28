@@ -1,0 +1,1 @@
+export const tronAddress = '0x6b37C700e9C34573d89B70149079aC33263410B4'

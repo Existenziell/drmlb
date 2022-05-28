@@ -6,12 +6,13 @@ import { hasEthereum } from '../lib/ethereum'
 import { ConnectWallet } from './ConnectWallet'
 import { chains } from '../lib/chains'
 
-const Wallet = () => {
-  const [isWalletConnected, setIsWalletConnected] = useState(false)
-  const [isCorrectChain, setIsCorrectChain] = useState(false)
+const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvider, setNetworkInfo, isCorrectChain, setIsCorrectChain }) => {
+  // const [walletConnected, setWalletConnected] = useState(false)
+  // const [isCorrectChain, setIsCorrectChain] = useState(false)
   const [connectedWalletAddress, setConnectedWalletAddress] = useState('')
-  const [networkInfo, setNetworkInfo] = useState('')
+  // const [networkInfo, setNetworkInfo] = useState('')
   const router = useRouter()
+  const chainId = 4 // (Local:1337 | Mumbai: 80001 | Rinkeby: 4)
 
   useEffect(() => {
     const getNameFromChainId = (chainId) => {
@@ -26,15 +27,21 @@ const Wallet = () => {
       const signer = provider.getSigner()
       const networkInfo = getNameFromChainId(userNetwork.chainId)
 
-      setNetworkInfo(networkInfo)
-      setIsCorrectChain(true)
+      if (userNetwork.chainId === chainId) {
+        setIsCorrectChain(true)
+        setProvider(provider)
+      } else {
+        setNetworkInfo('Please change network to Rinkeby in Metamask.')
+        setIsCorrectChain(false)
+      }
 
       try {
         const signerAddress = await signer.getAddress()
         setConnectedWalletAddress(signerAddress)
-        setIsWalletConnected(true)
+        setUserAddress(signerAddress)
+        setWalletConnected(true)
       } catch {
-        setIsWalletConnected(false)
+        setWalletConnected(false)
         setConnectedWalletAddress('')
       }
     }
@@ -52,24 +59,26 @@ const Wallet = () => {
 
     window.ethereum?.on('chainChanged', (chainId) => {
       // console.log('Chain changed:', getNameFromChainId(parseInt(chainId, 16)))
-      setNetworkInfo(getNameFromChainId(parseInt(chainId, 16)))
-      setIsCorrectChain(true)
+      router.reload(window.location.pathname)
+
+      // setNetworkInfo(getNameFromChainId(parseInt(chainId, 16)))
+      // setIsCorrectChain(true)
     })
   }, [router])
 
   return (
     <div className='absolute top-4 right-20 text-right'>
-      {isWalletConnected ?
+      {walletConnected ?
         <div className='dark:text-brand'>
           {connectedWalletAddress.substring(0, 5)}&#8230;{connectedWalletAddress.slice(connectedWalletAddress.length - 4)}
         </div>
         :
-        // hasEthereum() ?
-        <ConnectWallet />
-        // :
-        // <a href='https://metamask.io/download/' target='_blank' rel="noreferrer noopener">Install MetaMask</a>
+        hasEthereum() ?
+          <ConnectWallet />
+          :
+          <a href='https://metamask.io/download/' target='_blank' rel="noreferrer noopener">Install MetaMask</a>
       }
-      {networkInfo && <p className='text-md text-xs mt-1 dark:text-brand'>{networkInfo}</p>}
+      {/* {networkInfo && <p className='text-md text-xs mt-1 dark:text-brand'>{networkInfo}</p>} */}
     </div>
   )
 }
