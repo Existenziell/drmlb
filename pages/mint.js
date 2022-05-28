@@ -113,7 +113,7 @@ const Mint = () => {
                 </Link>.
               </p>
 
-              <video src='/tron/animation.mp4' controls={false} loop={true} autoPlay={true} muted className='max-w-xs mx-auto mb-8 rounded shadow' />
+              <video src='/tron/e1.mp4' controls={false} loop={true} autoPlay={true} muted className='max-w-xs mx-auto mb-8 rounded-2xl shadow' />
 
               {networkInfo &&
                 <div className='flex flex-col'>
