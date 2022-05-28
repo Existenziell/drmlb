@@ -6,9 +6,7 @@ const Nav = () => {
         { name: 'drm•lb', url: '/' },
         { name: 'E1 Token', url: '/mint' },
         { name: 'API', url: '/docs' },
-        { name: 'About', url: '/about' },
-        // { name: 'Team', url: '/team' },
-        // { name: 'Connect', url: '/connect' },
+        { name: 'About', url: '/about' }
     ]
 
     const router = useRouter()
