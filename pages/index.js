@@ -20,8 +20,8 @@ export default function Root() {
             <Link href='/docs'><a className='button block'>API Docs</a></Link>
           </div>
         </div>
-        <div className='hidden md:block'>
-          <Image src='/icons/dragon.png' width={420} height={300} alt='Poly Dragon' />
+        <div className='hidden md:block max-w-lg'>
+          <img src='/icons/dragon.png' alt='Poly Dragon' />
         </div>
       </div>
 
