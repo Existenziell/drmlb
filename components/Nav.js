@@ -4,7 +4,7 @@ import { useState } from 'react'
 const Nav = () => {
     const paths = [
         { name: 'drm•lb', url: '/' },
-        { name: 'TRON', url: '/mint' },
+        { name: 'E1 Token', url: '/mint' },
         { name: 'API', url: '/docs' },
         { name: 'About', url: '/about' },
         // { name: 'Team', url: '/team' },

@@ -25,14 +25,14 @@ const Tron = () => {
   return (
     <>
       <Head>
-        <title>Get Tron | drmlb.io</title>
+        <title>Get E1 Community Token | drmlb.io</title>
       </Head>
       <Wallet />
 
       <div className='min-h-screen flex flex-col items-center'>
-        <h1 className='text-4xl md:text-6xl'>Get TRON</h1>
+        <h1 className='text-4xl md:text-6xl'>Get E1 Community Token</h1>
 
-        <p className='mt-4'>TRON is our community token and can be found in{' '}
+        <p className='mt-4'>E1 Community Token can be found in{' '}
           <Link href='https://rinkeby.etherscan.io/address/0xF9Fc1C74a1b707b2d88a9eA69238a6A6472073D0'>
             <a className='link inline' target='_blank' rel="noreferrer noopener">Polygonscan</a>
           </Link>

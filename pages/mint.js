@@ -54,7 +54,7 @@ const Mint = () => {
       .then((receipt) => {
         setMintingSuccess(true)
         setMinting(false)
-        setFeedback('Congratulations, you are now the owner of your very own Tron NFT!')
+        setFeedback('Congratulations, you are now the owner of your very own E1 Token!')
         setTxHash(receipt.transactionHash)
       })
   }
@@ -85,7 +85,7 @@ const Mint = () => {
     return (
       <>
         <Head>
-          <title>Get Tron | drmlb.io</title>
+          <title>Get E1 Community Token | drmlb.io</title>
         </Head>
 
         <Wallet
@@ -103,9 +103,9 @@ const Mint = () => {
 
           {(!mintingSuccess && !minting) &&
             <div>
-              <h1 className='text-4xl md:text-6xl'>Get TRON</h1>
+              <h1 className='text-4xl md:text-6xl'>Get E1 Community Token</h1>
 
-              <p className='mt-4'>TRON is our community token and can be found on{' '}
+              <p className='mt-4'>Our E1 Community Token can be found on{' '}
                 <Link href={`https://rinkeby.etherscan.io/address/${tronAddress}#code`}>
                   <a className='link inline' target='_blank' rel="noreferrer noopener">Etherscan</a>
                 </Link>
@@ -121,7 +121,7 @@ const Mint = () => {
               {walletConnected && isCorrectChain &&
                 <section className='flex flex-col md:flex-row items-center justify-center text-xl p-8'>
 
-                  <p className='md:mr-4'>Tron Token{' '}</p>
+                  <p className='md:mr-4'>E1 Token{' '}</p>
                   <div className='inline-flex flex-col items-center justify-center'>
                     <svg onClick={() => checkMintAmount(mintAmount + 1)} xmlns='http://www.w3.org/2000/svg' className='h-12 w-12 cursor-pointer text-brand-dark dark:text-brand' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                       <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 15l7-7 7 7' />

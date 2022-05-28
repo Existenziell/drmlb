@@ -16,7 +16,7 @@ export default function Root() {
             <h2>Web3 Technology SaaS Provider</h2>
           </div>
           <div className='flex gap-2 align-baseline'>
-            <Link href='/mint'><a className='button block'>Get TRON</a></Link>
+            <Link href='/mint'><a className='button block'>Get E1 Token</a></Link>
             <Link href='/docs'><a className='button block'>API Docs</a></Link>
           </div>
         </div>

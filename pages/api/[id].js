@@ -28,9 +28,8 @@ export default async (req, res) => {
   } = req
 
   const nft = {
-
-    "name": `Tron NFT #${id}`,
-    "description": "Tron <3 Amp",
+    "name": `E1 Token #${id}`,
+    "description": "E1 Community Token",
     "image": "https://drmlb.io/tron/token.png",
     "edition": `${id}`,
     "date": Date.now(),
