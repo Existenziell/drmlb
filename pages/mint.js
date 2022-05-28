@@ -10,16 +10,17 @@ import { tronAddress } from '../config'
 import Specs from '../components/Specs'
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader'
 import Wallet from '../components/Wallet'
+import { addCustomToken } from '../lib/addCustomToken'
 
 const Mint = () => {
-  const [loading, setLoading] = useState(true)
+  const [walletConnected, setWalletConnected] = useState(false)
   const [contractInfo, setContractInfo] = useState({})
   const [mintAmount, setMintAmount] = useState(1)
-  const [walletConnected, setWalletConnected] = useState(false)
   const [userAddress, setUserAddress] = useState('')
   const [provider, setProvider] = useState()
   const [isCorrectChain, setIsCorrectChain] = useState(false)
 
+  const [loading, setLoading] = useState(true)
   const [minting, setMinting] = useState(false)
   const [mintingSuccess, setMintingSuccess] = useState(false)
   const [txHash, setTxHash] = useState('')
@@ -36,38 +37,9 @@ const Mint = () => {
       setLoading(false)
     }
     init()
-  }, [getContractInfo])
+  }, [])
 
-  const addCustomTokens = async () => {
-    const tokenAddress = tronAddress;
-    const tokenSymbol = 'AMP';
-    const tokenDecimals = 0.1;
-    const tokenImage = 'https://www.drmlb.io/tron/token.png';
 
-    try {
-      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-      const wasAdded = await ethereum.request({
-        method: 'wallet_watchAsset',
-        params: {
-          type: 'ERC20', // Initially only supports ERC20, but eventually more!
-          options: {
-            address: tokenAddress, // The address that the token is at.
-            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-            decimals: tokenDecimals, // The number of decimals in the token
-            image: tokenImage, // A string url of the token logo
-          },
-        },
-      })
-
-      if (wasAdded) {
-        console.log('Thanks for your interest!')
-      } else {
-        console.log('Your loss!')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   async function mint() {
     setMinting(true)
@@ -95,9 +67,14 @@ const Mint = () => {
 
   if (loading) {
     return (
-      <div className='flex flex-col items-center pt-32 bg-brand dark:bg-brand-dark h-screen'>
-        <ClimbingBoxLoader color={'white'} size={30} />
-        <p className='font-mono text-base relative top-24 left-6 text-white'>Connecting to the blockchain...</p>
+      <div className='flex flex-col items-center pt-32 bg-brand dark:bg-brand-dark min-h-screen'>
+        <div className='hidden dark:block'>
+          <ClimbingBoxLoader color={'var(--color-brand)'} size={30} />
+        </div>
+        <div className='block dark:hidden'>
+          <ClimbingBoxLoader color={'var(--color-brand-dark)'} size={30} />
+        </div>
+        <p className='font-mono text-base relative top-24 left-6 text-brand-dark dark:text-brand'>Connecting to the blockchain...</p>
       </div>
     )
   }
@@ -110,6 +87,7 @@ const Mint = () => {
         <Head>
           <title>Get Tron | drmlb.io</title>
         </Head>
+
         <Wallet
           walletConnected={walletConnected}
           setWalletConnected={setWalletConnected}
@@ -142,8 +120,6 @@ const Mint = () => {
               {walletConnected && isCorrectChain &&
                 <section className='flex flex-col md:flex-row items-center justify-center text-xl p-8'>
 
-                  {/* <p className='absolute top-16 right-4 text-sm'>Connected to wallet: {userAddress}</p> */}
-
                   <p className='md:mr-4'>Tron Token{' '}</p>
                   <div className='inline-flex flex-col items-center justify-center'>
                     <svg onClick={() => checkMintAmount(mintAmount + 1)} xmlns='http://www.w3.org/2000/svg' className='h-12 w-12 cursor-pointer text-brand-dark dark:text-brand' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
@@ -154,8 +130,6 @@ const Mint = () => {
                       <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
                     </svg>
                   </div>
-
-                  {/* <span className='text-center md:text-left md:ml-8 w-32'>Tron NFT{mintAmount > 1 ? `s` : null}</span> */}
 
                   <button className='mt-4 md:ml-4 md:mt-0 button flex items-center' onClick={mint}>
                     <svg xmlns='http://www.w3.org/2000/svg' className='w-6 h-6 mr-2' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
@@ -202,7 +176,7 @@ const Mint = () => {
               <p className='text-brand-dark dark:text-brand text-2xl max-w-lg mx-auto'>{feedback}</p>
               <p className='my-8'>Transaction hash: (click to verify)<br /><a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target='_blank' rel='noopener noreferrer' className='link'>{txHash}</a></p>
               <div className='flex flex-col items-center justify-center gap-2 mt-4' >
-                <button className='button' onClick={addCustomTokens}>Add to MetaMask</button>
+                <button className='button' onClick={addCustomToken}>Add to MetaMask</button>
                 <button onClick={() => setMintingSuccess(false)} className='button block'>Mint More</button>
               </div>
             </div>

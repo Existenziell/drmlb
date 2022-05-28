@@ -50,6 +50,7 @@ const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvid
 
     window.ethereum?.on('connect', (accounts) => {
       // console.log('Connected:', accounts, getNameFromChainId(parseInt(accounts.chainId, 16)))
+      router.reload(window.location.pathname)
     })
 
     window.ethereum?.on('accountsChanged', (accounts) => {
@@ -60,11 +61,8 @@ const Wallet = ({ walletConnected, setWalletConnected, setUserAddress, setProvid
     window.ethereum?.on('chainChanged', (chainId) => {
       // console.log('Chain changed:', getNameFromChainId(parseInt(chainId, 16)))
       router.reload(window.location.pathname)
-
-      // setNetworkInfo(getNameFromChainId(parseInt(chainId, 16)))
-      // setIsCorrectChain(true)
     })
-  }, [router])
+  })
 
   return (
     <div className='absolute top-4 right-20 text-right'>
