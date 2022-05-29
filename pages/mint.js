@@ -24,7 +24,8 @@ const Mint = () => {
   } = appCtx
 
   const [contractInfo, setContractInfo] = useState({})
-  const [mintAmount, setMintAmount] = useState(1)
+  const [mintAmount, setMintAmount] = useState(200)
+  const [maxMintAmount, setMaxMintAmount] = useState(null)
   const [loading, setLoading] = useState(true)
   const [minting, setMinting] = useState(false)
   const [mintingSuccess, setMintingSuccess] = useState(false)
@@ -37,6 +38,7 @@ const Mint = () => {
     async function init() {
       const info = await getContractInfo()
       setContractInfo(info)
+      setMaxMintAmount(info.maxMintAmount)
       setLoading(false)
     }
     init()
@@ -66,7 +68,7 @@ const Mint = () => {
   }
 
   const checkMintAmount = (amount) => {
-    if (amount >= 1 && amount <= 20) {
+    if (amount >= 1 && amount <= maxMintAmount) {
       setMintAmount(amount)
     }
   }

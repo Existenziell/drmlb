@@ -11,8 +11,8 @@ contract E1CommunityToken is ERC721Enumerable, Ownable {
     string baseURI;
     string public baseExtension = "";
     uint256 public cost = 0.00000001 ether;
-    uint256 public maxSupply = 1;
-    uint256 public maxMintAmount = 1;
+    uint256 public maxSupply = 100000;
+    uint256 public maxMintAmount = 20;
     bool public paused = false;
 
     constructor(
