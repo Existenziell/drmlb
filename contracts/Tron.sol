@@ -9,7 +9,7 @@ contract Tron is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
     string baseURI;
-    string public baseExtension = ".json";
+    string public baseExtension = "";
     uint256 public cost = 0.000001 ether;
     uint256 public maxSupply = 100000;
     uint256 public maxMintAmount = 20;
