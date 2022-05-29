@@ -24,7 +24,7 @@ const Mint = () => {
   } = appCtx
 
   const [contractInfo, setContractInfo] = useState({})
-  const [mintAmount, setMintAmount] = useState(200)
+  const [mintAmount, setMintAmount] = useState(1)
   const [maxMintAmount, setMaxMintAmount] = useState(null)
   const [loading, setLoading] = useState(true)
   const [minting, setMinting] = useState(false)

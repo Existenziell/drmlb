@@ -1,5 +1,5 @@
-export const e1ExclusiveNftAddress = '0x2a01456C25e5Ab1239F4026d5cC1F2648fc3bb73'
-export const e1NftAddress = '0x6BB8E1E305DB0B527AFf8c379ba16BcD49A429E9'
-export const e1TokenAddress = '0x6CA9FB8b5a42948798c26Aba5d907D4554990269'
+export const e1ExclusiveNftAddress = '0x5cA07072dBCE79581f3138Ab3fF4bFa7d316a70F'
+export const e1NftAddress = '0x17F0d103F053634B428189F900fc3d3184c7a5Cd'
+export const e1TokenAddress = '0x4CCE7ac0B91167a0716ADA2e2830A5974Ec72b21'
 
-export const e1contractAddress = '0x6BB8E1E305DB0B527AFf8c379ba16BcD49A429E9'
+export const e1contractAddress = '0x4CCE7ac0B91167a0716ADA2e2830A5974Ec72b21'

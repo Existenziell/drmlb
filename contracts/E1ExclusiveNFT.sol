@@ -21,6 +21,7 @@ contract E1ExclusiveNFT is ERC721Enumerable, Ownable {
         string memory _initBaseURI
     ) ERC721(_name, _symbol) {
         setBaseURI(_initBaseURI);
+        mint(1);
     }
 
     // internal

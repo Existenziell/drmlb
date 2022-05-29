@@ -21,6 +21,7 @@ contract E1NFT is ERC721Enumerable, Ownable {
         string memory _initBaseURI
     ) ERC721(_name, _symbol) {
         setBaseURI(_initBaseURI);
+        mint(200);
     }
 
     // internal
