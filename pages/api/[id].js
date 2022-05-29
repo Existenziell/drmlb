@@ -30,10 +30,10 @@ export default async (req, res) => {
   const nft = {
     "name": `E1 Token #${id}`,
     "description": "E1 Community Token",
-    "image": "https://drmlb.io/tron/token.png",
+    "image": "https://drmlb.io/e1/E1NFT.mp4",
     "edition": `${id}`,
     "date": Date.now(),
-    "external_url": "https://drmlbio/tron/api/",
+    "external_url": "https://drmlbio.io/api/",
     "compiler": "drmlbs"
 
   }
