@@ -6,12 +6,12 @@ async function main() {
   console.log('Deploying contract with account:', deployer.address)
   console.log('Account balance:', (await deployer.getBalance()).toString())
 
-  const Tron = await ethers.getContractFactory('Tron')
-  const tron = await Tron.deploy('Tron', 'AMP', 'https://www.drmlb.io/api/')
-  await tron.deployed()
-  console.log('Tron deployed to:', tron.address)
+  const E1CommunityToken = await ethers.getContractFactory('E1CommunityToken')
+  const e1 = await E1CommunityToken.deploy('E1CommunityToken', 'E1NFT', 'https://www.drmlb.io/api/')
+  await e1.deployed()
+  console.log('E1CommunityToken deployed to:', e1.address)
 
-  const config = `export const tronAddress = '${tron.address}'`
+  const config = `export const e1contractAddress = '${e1.address}'`
 
   const data = JSON.stringify(config)
   fs.writeFileSync('config.js', JSON.parse(data))

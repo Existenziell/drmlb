@@ -5,12 +5,12 @@ import Link from 'next/link'
 import Head from 'next/head'
 import detectEthereumProvider from '@metamask/detect-provider'
 import getContractInfo from '../lib/getContractInfo'
-import Tron from '../artifacts/contracts/Tron.sol/Tron.json'
+import E1CommunityToken from '../artifacts/contracts/E1CommunityToken.sol/E1CommunityToken.json'
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader'
 import Wallet from '../components/Wallet'
 import { addCustomToken } from '../lib/addCustomToken'
 import { AppContext } from '../context/AppContext'
-import { tronAddress } from '../config'
+import { e1contractAddress } from '../config'
 
 const Mint = () => {
   const appCtx = useContext(AppContext)
@@ -47,7 +47,7 @@ const Mint = () => {
     // Provider is read-only, get a signer for on-chain transactions
     const signer = provider.getSigner()
     // Since the third argument is signer, the contract data can be manipulated
-    const contract = new ethers.Contract(tronAddress, Tron.abi, signer)
+    const contract = new ethers.Contract(e1contractAddress, E1CommunityToken.abi, signer)
 
     try {
       const transaction = await contract.mint(mintAmount)
@@ -103,7 +103,7 @@ const Mint = () => {
               <h1 className='text-4xl md:text-6xl'>E1 Community Token</h1>
 
               <p className='mt-4'>Our E1 Community Token can be found on{' '}
-                <Link href={`https://rinkeby.etherscan.io/address/${tronAddress}#code`}>
+                <Link href={`https://rinkeby.etherscan.io/address/${e1contractAddress}#code`}>
                   <a className='link inline' target='_blank' rel="noreferrer noopener">Etherscan</a>
                 </Link>
               </p>
