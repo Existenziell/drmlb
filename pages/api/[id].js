@@ -33,9 +33,8 @@ export default async (req, res) => {
     "image": "https://drmlb.io/e1/E1NFT.mp4",
     "edition": `${id}`,
     "date": Date.now(),
-    "external_url": `https://drmlbio.io/api/${id}`,
+    "external_url": `https://www.drmlb.io/api/${id}`,
     "compiler": "drmlbs"
-
   }
   res.status(200).json(nft)
 }
