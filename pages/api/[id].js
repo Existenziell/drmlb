@@ -33,7 +33,7 @@ export default async (req, res) => {
     "image": "https://drmlb.io/e1/E1NFT.mp4",
     "edition": `${id}`,
     "date": Date.now(),
-    "external_url": "https://drmlbio.io/api/",
+    "external_url": `https://drmlbio.io/api/${id}`,
     "compiler": "drmlbs"
 
   }
